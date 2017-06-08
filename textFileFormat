@@ -1,0 +1,24 @@
+{
+	"questions": 
+	[{
+			"questiontitle": "xxxxx",
+			"realworldmodelpath": "xxxxx",
+			"idealizedmodelpath": "xxxxx",
+			"assumptions": 
+			[{
+				"text": "assumption1 text..",
+				"type": "needed/unneeded/complicatingfactor",
+				"reasons": [{
+					"text": "reason1 text..",
+					"type": "true/false"
+							}, {}]
+			},{}]
+	},{},{}],
+	"gradingmetric": 
+	{
+		"pointsforcorrectassumption": number,
+		"pointsforincorrectassumption": number,
+		"pointsforcorrectreason": number,
+		"pointsforincorrectreason": number
+	}
+}
