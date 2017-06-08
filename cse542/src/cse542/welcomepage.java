@@ -5,6 +5,9 @@
  */
 package cse542;
 
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+
 /**
  *
  * @author shivamgupta
@@ -99,9 +102,29 @@ public class welcomepage extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         String name = jTextField1.getText();
-        if(name==null || name.length()==0){
-            
-        }
+        this.setVisible(false);
+        SwingUtilities.invokeLater(new Runnable(){
+           @Override
+           public void run() {
+               quiz ob = new quiz();
+                welcomepage ob1 =  new welcomepage();
+                
+                
+                JFrame frame1 = new JFrame();
+               
+                
+                frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame1.getContentPane().add(ob);
+                frame1.pack();
+                frame1.setVisible(true);
+                
+               //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+           
+           }
+       
+       
+       });
        
     }//GEN-LAST:event_jButton1ActionPerformed
 
