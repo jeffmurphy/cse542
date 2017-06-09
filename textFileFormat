@@ -1,7 +1,7 @@
 # comments are allowed if first character of line is #
 # blank lines should be skipped too
 
-questiontite: xxxx
+questiontitle: xxxx
 realworldmodelpath: relative/path/no/absolutes.png
 idealizedmodelpath: relative/path/no/absolutes.png
 
@@ -30,7 +30,9 @@ assumption-points: -1
   reason-points: -1
 
 
-questiontite: zzzz
+# here's another question
+
+questiontitle: zzzz
 realworldmodelpath: relative/path/no/absolutes.png
 idealizedmodelpath: relative/path/no/absolutes.png
 
@@ -57,4 +59,7 @@ assumption-points: -1
   reason-text: another1 invariant is #reasons given >= 2
   reason-type: false
   reason-points: -1
+
+
+# more questions can be added below by cut/paste 
 
