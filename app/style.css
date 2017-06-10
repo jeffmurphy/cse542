@@ -1,0 +1,22 @@
+#questionbody {
+    margin-bottom: 25px;
+    border: 1px solid black;
+}
+
+#realworld {
+    float: left;
+}
+
+#realworld img {
+    width: 200px;
+    height: 200px;
+}
+
+#idealized img {
+    width: 200px;
+    height: 200px;
+}
+
+#jsonconfig {
+    border: 1px solid black;
+}

@@ -14,6 +14,7 @@ function validate(config) {
       forall els:
          questiontext, type, points must exist
          assumptions.length >= 3
+         assumptions types must contain at least one 'needed'
 
          foreach assumption:
              text, type, points must exist
@@ -21,6 +22,7 @@ function validate(config) {
 
          any assumptions that are != needed:
              reasons.length >= 2
+             reasons types must contain at least one 'true'
              foreach reason:
                 text, type, points must exist
                 assert type in [true, false]
