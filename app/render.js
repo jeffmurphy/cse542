@@ -2,7 +2,10 @@ var questions = [];
 var current_points = 0;
 
 function render_question(q) {
-    document.getElementById('testing').innerHTML = JSON.stringify(q, null, 2);
+    document.getElementById('jsonconfig').innerHTML = JSON.stringify(q, null, 2);
+    document.getElementById('realworld').innerHTML = "<img src='" + q['realworldmodelpath'] + "'/>";
+    document.getElementById('idealized').innerHTML = "<img src='" + q['idealizedmodelpath'] + "'/>";
+
 }
 
 function load_file() {
