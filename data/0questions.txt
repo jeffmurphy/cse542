@@ -1,0 +1,65 @@
+# comments are allowed if first character of line is #
+# blank lines should be skipped too
+
+questiontitle: xxxx
+realworldmodelpath: relative/path/no/absolutes.png
+idealizedmodelpath: relative/path/no/absolutes.png
+
+assumption-text: xxx assumption1 must be on a single line
+assumption-type: needed
+assumption-points: 1
+
+assumption-text: xxx assumption2 can contain: "special characters" &amp; html
+assumption-type: unneeded
+assumption-points: -1
+  reason-text: this reason relates to the most recently parsed assumption-text
+  reason-type: true
+  reason-points: +1
+  reason-text: another1 invariant is #reasons given >= 2
+  reason-type: false
+  reason-points: -1
+
+assumption-text: xxx assumption3 invariant is #assumptions >= 3 for each question
+assumption-type: complicatingfactor
+assumption-points: -1
+  reason-text: this reason relates to the most recently parsed assumption-text
+  reason-type: true
+  reason-points: +1
+  reason-text: another1 invariant is #reasons given >= 2
+  reason-type: false
+  reason-points: -1
+
+
+# here's another question
+
+questiontitle: zzzz
+realworldmodelpath: relative/path/no/absolutes.png
+idealizedmodelpath: relative/path/no/absolutes.png
+
+assumption-text: zzz assumption1 must be on a single line
+assumption-type: needed
+assumption-points: 1
+
+assumption-text: zzz assumption2 can contain: "special characters" &amp; html
+assumption-type: unneeded
+assumption-points: -1
+  reason-text: this reason relates to the most recently parsed assumption-text
+  reason-type: true
+  reason-points: +1
+  reason-text: another1 invariant is #reasons given >= 2
+  reason-type: false
+  reason-points: -1
+
+assumption-text: zzz assumption3 invariant is #assumptions >= 3 for each question
+assumption-type: complicatingfactor
+assumption-points: -1
+  reason-text: this reason relates to the most recently parsed assumption-text
+  reason-type: true
+  reason-points: +1
+  reason-text: another1 invariant is #reasons given >= 2
+  reason-type: false
+  reason-points: -1
+
+
+# more questions can be added below by cut/paste 
+
