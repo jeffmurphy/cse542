@@ -96,7 +96,7 @@ function parse(text) {
         if (kw.test(line)) {
             if (isEmpty(Q)) throw "invalid file format: no questiontitle";
             if (isEmpty(A)) throw "invalid file format: no assumption_text";
-            A['assumption_points'] = line.replace(kw, "");
+            A['assumption_points'] = parseInt(line.replace(kw, ""));
         }
 
         kw = /^\s*reason_text:\s*/;
@@ -121,7 +121,7 @@ function parse(text) {
         if (kw.test(line)) {
             if (isEmpty(Q)) throw "invalid file format: no questiontitle";
             if (assumptions.length == 0) throw "invalid file format: reasons before assumptions";
-            R['reason_points'] = line.replace(kw, "");
+            R['reason_points'] = parseInt(line.replace(kw, ""));
         }
 
     }
