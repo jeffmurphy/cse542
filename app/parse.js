@@ -1,4 +1,11 @@
 
+
+exports.parse = parse; // for testing with nodejs
+
+function assert(iffalse, throwthis) {
+    if (! iffalse ) throw throwthis || "Assertion failed";
+}
+
 function isEmpty(obj) {
     for(var prop in obj) {
         if(obj.hasOwnProperty(prop))
@@ -29,6 +36,18 @@ function validate(config) {
 
        if any of the above is violated, throw an error
      */
+
+    assert(config.length > 0, "config file contained no questions");
+    for (var i = 0 ; i < config.length ; i++) {
+        for (kw in {'questiontitle': 1, 'realworldmodelpath': 1, 'idealizedmodelpath': 1, 'assumptions': 1}) {
+            assert(kw in config[i], kw + " field is missing from one of the questions");
+        }
+        assert(config[i]['assumptions'].length >= 3,
+               "question must have at least 3 assumptions: " +
+               config[i]['assumptions'].length);
+    }
+
+    return config;
 }
 
 /* Return an array of JSON objects */
@@ -138,70 +157,6 @@ function parse(text) {
         config.push(Q);
     }
 
-    return config;
+    return validate(config);
 }
-
-var x = `questiontitle: xxxx
-realworldmodelpath: relative/path/no/absolutes.png
-idealizedmodelpath: relative/path/no/absolutes.png
-
-assumption_text: xxx1 assumption1 must be on a single line
-assumption_type: needed
-assumption_points: 1
-
-assumption_text: xxx2 assumption2 can contain: "special characters" &amp; html
-assumption_type: unneeded
-assumption_points: -1
- reason_text: xxx2 this reason relates to the most recently parsed assumption-text
- reason_type: true
- reason_points: +1
- reason_text: xxx2 another1 invariant is #reasons given >= 2
- reason_type: false
- reason_points: -1
-
-assumption_text: xxx3 assumption3 invariant is #assumptions >= 3 for each question
-assumption_type: complicatingfactor
-assumption_points: -1
- reason_text: xxx3 this reason relates to the most recently parsed assumption-text
- reason_type: true
- reason_points: +1
- reason_text: xxx3 another1 invariant is #reasons given >= 2
- reason_type: false
- reason_points: -1
-
-questiontitle: zzzz
-realworldmodelpath: relative/path/no/absolutes.png
-idealizedmodelpath: relative/path/no/absolutes.png
-
-assumption_text: zzz1 assumption1 must be on a single line
-assumption_type: needed
-assumption_points: 1
-
-assumption_text: zzz2 assumption2 can contain: "special characters" &amp; html
-assumption_type: unneeded
-assumption_points: -1
- reason_text: zzz2 this reason relates to the most recently parsed assumption-text
- reason_type: true
- reason_points: +1
- reason_text: zzz2 another1 invariant is #reasons given >= 2
- reason_type: false
- reason_points: -1
-
-assumption_text: zzz3 assumption3 invariant is #assumptions >= 3 for each question
-assumption_type: complicatingfactor
-assumption_points: -1
- reason_text: zzz3 this reason relates to the most recently parsed assumption-text
- reason_type: true
- reason_points: +1
- reason_text: zzz3 another1 invariant is #reasons given >= 2
- reason_type: false
- reason_points: -1
- 
-`;
-
-// uncomment to test
-// config = parse(x);
-// console.log(JSON.stringify(config, null, 2));
-
-
 
