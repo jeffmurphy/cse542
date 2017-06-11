@@ -45,6 +45,13 @@ function validate(config) {
         assert(config[i]['assumptions'].length >= 3,
                "question must have at least 3 assumptions: " +
                config[i]['assumptions'].length);
+        var atypes = {};
+        for (var k = 0 ; k < config[i]['assumptions'].length ; k++) {
+            atypes[config[i]['assumptions'][k]['assumption_type']] = 1;
+            if (!(config[i]['assumptions'][k]['assumption_type'] in {'needed': 1, 'unneeded': 1, 'complicatingfactor': 1}))
+                throw "assumption_type is invalid: " + config[i]['assumptions'][k]['assumption_type'];
+        }
+        assert ('needed' in atypes, "assumptions must have at least one NEEDED type");
     }
 
     return config;
@@ -52,7 +59,7 @@ function validate(config) {
 
 /* Return an array of JSON objects */
 
-function parse(text) {
+function parse(text, check) {
     var Q = {};
     var kw = "";
     var config  = [];
@@ -60,6 +67,8 @@ function parse(text) {
     var A = {};
     var reasons = [];
     var R = {};
+    if (check == null) check == true;
+
 
     for (line of text.split('\n')) {
 
@@ -157,6 +166,8 @@ function parse(text) {
         config.push(Q);
     }
 
-    return validate(config);
+    if (check)
+        return validate(config);
+    return config;
 }
 

@@ -21,7 +21,12 @@ reason_type: true
 reason_points: +1
 reason_text: xxx2 another1 invariant is #reasons given >= 2
 reason_type: false
-reason_points: -1`,
+reason_points: -1
+
+assumption_text: xxx3 assumption1 must be on a single line
+assumption_type: needed
+assumption_points: 1
+`,
 
     good_multiple: `questiontitle: xxxx
 realworldmodelpath: relative/path/no/absolutes.png
@@ -185,10 +190,13 @@ assumption_points: -1
 function print(x)  { process.stdout.write(x); }
 function println(x) { console.log(x); }
 
+//config = parser.parse(tests['good_single']);
+//console.log(JSON.stringify(config, null, 2));
+
 for (t in tests) {
     print("Test: " + t);
     try {
-        config = parser.parse(tests[t]);
+        config = parser.parse(tests[t], true);
         println("\t\tSUCCEEDED");
     }
     catch (e) {
