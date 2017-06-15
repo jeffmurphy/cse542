@@ -88,20 +88,24 @@ function evaluate_reasons_submission(){
 
 
 function render_question(q) {
-        // window.alert("create question element");
-        
-        //document.getElementById('testing').innerHTML = JSON.stringify(q, null, 2);
+    // window.alert("create question element");
 
+    //document.getElementById('testing').innerHTML = JSON.stringify(q, null, 2);
 
-        document.getElementById('question_ele').innerHTML += "<br>" +"<b>"+q["questiontitle"]+"</b>" + "<br>";
+    document.getElementById("questionbody").style.visibility = "visible";
 
-        var assumptions_ele = q["assumptions"];
-        // window.alert("assumptions_ele length" + assumptions_ele.length);
-        create_radios(assumptions_ele);
-        
-        //show submit button as well once all the radios are loaded. 
+    document.getElementById('question_ele').innerHTML += "<br>" +"<b>"+q["questiontitle"]+"</b>" + "<br>";
 
-        document.getElementById('assumptions').innerHTML += "<input type='submit' name='Submit' id='Submit_assm' value='Submit'>"+"<br>";
+    var assumptions_ele = q["assumptions"];
+    // window.alert("assumptions_ele length" + assumptions_ele.length);
+    create_radios(assumptions_ele);
+
+    //show submit button as well once all the radios are loaded.
+
+    document.getElementById('assumptions').innerHTML += "<input type='submit' name='Submit' id='Submit_assm' value='Submit'>"+"<br>";
+
+    document.getElementById('realworld').innerHTML = "<img src='" + q['realworldmodelpath'] + "'/>";
+    document.getElementById('idealized').innerHTML = "<img src='" + q['idealizedmodelpath'] + "'/>";
     return false;
 
 }
