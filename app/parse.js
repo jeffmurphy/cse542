@@ -21,7 +21,6 @@ function validate(config) {
       forall els:
          questiontext, type, points must exist
          assumptions.length >= 3
-         assumptions types must contain at least one 'needed'
 
          foreach assumption:
              text, type, points must exist
@@ -29,22 +28,20 @@ function validate(config) {
 
          any assumptions that are != needed:
              reasons.length >= 2
-             reasons types must contain at least one 'true'
              foreach reason:
                 text, type, points must exist
                 assert type in [true, false]
 
        if any of the above is violated, throw an error
      */
-
     assert(config.length > 0, "config file contained no questions");
     for (var i = 0 ; i < config.length ; i++) {
         for (kw in {'questiontitle': 1, 'realworldmodelpath': 1, 'idealizedmodelpath': 1, 'assumptions': 1}) {
             assert(kw in config[i], kw + " field is missing from one of the questions");
         }
         assert(config[i]['assumptions'].length >= 3,
-               "question must have at least 3 assumptions: " +
-               config[i]['assumptions'].length);
+            "question must have at least 3 assumptions: " +
+            config[i]['assumptions'].length);
         var atypes = {};
         for (var k = 0 ; k < config[i]['assumptions'].length ; k++) {
             atypes[config[i]['assumptions'][k]['assumption_type']] = 1;
@@ -68,7 +65,6 @@ function parse(text, check) {
     var reasons = [];
     var R = {};
     if (check == null) check == true;
-
 
     for (line of text.split('\n')) {
 
@@ -170,4 +166,3 @@ function parse(text, check) {
         return validate(config);
     return config;
 }
-
