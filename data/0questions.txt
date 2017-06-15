@@ -2,8 +2,8 @@
 # blank lines should be skipped too
 
 questiontitle: 1111xxxx
-realworldmodelpath: ../data/strut-real.png
-idealizedmodelpath: ../data/strut-model.png
+realworldmodelpath: ../data/RealWorld1.png
+idealizedmodelpath: ../data/IdealizedModel1.png
 
 # must be specified in the order shown: text, type, points
 
@@ -36,8 +36,8 @@ assumption_points: -1
 # here's another question
 
 questiontitle: zzzz
-realworldmodelpath: ../data/piston-real.png
-idealizedmodelpath: ../data/piston-model.png
+realworldmodelpath: ../data/RealWorld2.png
+idealizedmodelpath: ../data/IdealizedModel2.png
 
 assumption_text: zzz assumption1 must be on a single line
 assumption_type: needed
