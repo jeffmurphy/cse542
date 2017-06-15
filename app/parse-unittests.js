@@ -2,7 +2,7 @@
  * Created by jcmurphy on 6/10/17.
  */
 
-var parser = require('./parse.js');
+//var parser = require('./parse.js');
 
 var tests = {
     good_single: `questiontitle: xxxx
@@ -187,23 +187,22 @@ assumption_points: -1
 `,
 };
 
-function print(x)  { process.stdout.write(x); }
-function println(x) { console.log(x); }
+function printdiv(x,y) { if (y == null) y = "output"; document.getElementById(y).innerHTML += x; }
 
 //config = parser.parse(tests['good_single']);
 //console.log(JSON.stringify(config, null, 2));
-
-for (t in tests) {
-    print("Test: " + t);
-    try {
-        config = parser.parse(tests[t], true);
-        println("\t\tSUCCEEDED");
-    }
-    catch (e) {
-        println("\t\tFAILED: " + e);
+function runtests() {
+    for (t in tests) {
+        printdiv("Test: " + t + " Status: ");
+        try {
+            config = parse(tests[t], true);
+            printdiv("SUCCEEDED<BR>");
+        }
+        catch (e) {
+            printdiv("FAILED: " + e + "<BR>");
+        }
     }
 }
-
 // console.log(JSON.stringify(config, null, 2));
 
 

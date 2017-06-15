@@ -1,6 +1,6 @@
 
 
-exports.parse = parse; // for testing with nodejs
+//exports.parse = parse; // for testing with nodejs
 
 function assert(iffalse, throwthis) {
     if (! iffalse ) throw throwthis || "Assertion failed";
