@@ -20,3 +20,17 @@
 #jsonconfig {
     border: 1px solid black;
 }
+
+
+#score_button_id {
+    line-height: 30px;
+    width: 200px;
+    font-size: 18pt;
+    font-family: tahoma;
+    margin-top: 1px;
+    margin-right: 2px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+

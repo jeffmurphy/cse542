@@ -1,84 +1,112 @@
 var questions = [];
 var current_points = 0;
 var global_question= null;
-var assumption_selected = null;
+var assumption_selected = [];
 
-function evaluate_submission() {
-    //window.alert("global question "+ global_question['questiontitle']);
+function evaluate_assumptions_submission() {
+    // window.alert("global question "+ global_question['questiontitle']);
     console.log("global question "+ global_question['questiontitle']);
     // document.getElementByName('Submit').style.display = 'block';
     // document.getElementsByName('Submit').style.visibility = "hidden"; 
-    document.getElementById('Submit_assm').disabled = true;
+    document.getElementById('Submit_assm').hidden = true;
     // document.getElementById('id').style.visibility = "hidden"; 
     // document.getElementById('id').style.visibility = "hidden"; 
     // document.getElementById('id').style.visibility = "hidden"; 
     console.log("hiding working");
+    var k = 0; //to populate assumption selected array. Multiple assumptions can be selected. 
+    var submit_reasons_set = false;
+    var checkboxes = document.getElementsByName('all_assumptions_chk_bx');
+    // window.alert("till here");
+    for (i = 0; i < checkboxes.length; i++) {
+        //process only if the checkbox is checked. else just disable the checkbox.
+        // window.alert("till here");
+        if (checkboxes[i].type == 'checkbox' && checkboxes[i].checked) {
+            console.log("checkbox value"+checkboxes[i].value);
+            assumption_selected[k] = checkboxes[i].value; // if first checkbox checked then 0 stored in array. 
+            console.log("checkbox selected : "+checkboxes[i].value);
 
-    var radios = document.getElementsByName('selection');
-    for (i = 0; i < radios.length; i++) {
-        if (radios[i].type == 'radio' && radios[i].checked) {
-            assumption_selected = radios[i].value;
-            console.log("radio selected : "+radios[i].value);
+            var assumptions_ele = global_question["assumptions"];
+            if(assumptions_ele[assumption_selected[k]]["assumption_type"]=="needed"){
+                document.getElementById("chk_"+i).disabled= true;
+                console.log("assumption type needed"); 
+                current_points+=assumptions_ele[assumption_selected[k]]["assumption_points"];
+                console.log("modified points:"+current_points);
+                // document.getElementById('score_display_ele').innerHTML = "Score obtained : "+current_points;
+                console.log("Score displayed");
+                document.getElementById("next").disabled= false;
+            }
+            else if(assumptions_ele[assumption_selected[k]]["assumption_type"]=="unneeded" || assumptions_ele[assumption_selected[k]]["assumption_type"]=="complicatingfactor"){
+                console.log("assumption type unneeded or complicatingfactor");
+                document.getElementById("chk_"+i).disabled= true;
+
+                current_points+=assumptions_ele[assumption_selected[k]]["assumption_points"];
+                console.log("modified points:"+current_points);
+
+                // document.getElementById('score_display_ele').innerHTML += "Wrong selection!! Score: "+current_points+"<br>";
+                // document.getElementById('score_display_ele').innerHTML += "To increase, select reason"+"<br>";
+
+                console.log("Score displayed");
+
+                //Display reasons
+
+                var all_reasons = assumptions_ele[assumption_selected[k]]["reasons"];
+
+                for (j = 0; j < all_reasons.length; j++){
+                    document.getElementById('assm_'+i).innerHTML += "<input type='radio' name='reasons_"+i+"' value="+j+" id = rd_"+j+" >"+all_reasons[j]["reason_text"]+"<br>";
+                }
+                console.log("Reason checkboxes displayed");
+
+                //show submit button as well once all the radios are loaded. 
+
+                if(submit_reasons_set == false){
+                   document.getElementById('reasons').innerHTML += "<input type='submit' id='submit_reasons' name='Submit_reasons' value='Submit Reason'>";
+                   submit_reasons_set = true;
+                }
+
+
+                console.log("Reason submit displayed");
+
+
+                // return false;
+
+
+            }
         }
-    }
-    var assumptions_ele = global_question["assumptions"];
-    if(assumptions_ele[assumption_selected]["assumption_type"]=="needed"){
-        console.log("assumption type needed"); 
-        current_points+=assumptions_ele[assumption_selected]["assumption_points"];
-        console.log("modified points:"+current_points);
-        document.getElementById('score_display_ele').innerHTML = "Score obtained : "+current_points;
-        console.log("Score displayed");
-        document.getElementById("next").disabled= false;
-    }
-    else if(assumptions_ele[assumption_selected]["assumption_type"]=="unneeded" || assumptions_ele[assumption_selected]["assumption_type"]=="complicatingfactor"){
-        console.log("assumption type unneeded or complicatingfactor");
+        else{
+            //blurr the checkbox
+            console.log("checkbox not selected : "+checkboxes[i].value);
+            document.getElementById("chk_"+i).disabled= true;
 
-        current_points+=assumptions_ele[assumption_selected]["assumption_points"];
-        console.log("modified points:"+current_points);
-
-        document.getElementById('score_display_ele').innerHTML += "Wrong selection!! Score: "+current_points+"<br>";
-        document.getElementById('score_display_ele').innerHTML += "To increase, select reason"+"<br>";
-
-        console.log("Score displayed");
-
-
-        var all_reasons = assumptions_ele[assumption_selected]["reasons"];
-
-        for (i = 0; i < all_reasons.length; i++){
-            document.getElementById('reasons').innerHTML += "<input type='checkbox' name='reasons' value="+i+" id = ch_"+i+" >"+all_reasons[i]["reason_text"]+"<br>";
         }
-        console.log("Reason checkboxes displayed");
-
-        //show submit button as well once all the radios are loaded. 
-
-        document.getElementById('reasons').innerHTML += "<input type='submit' name='Submit_reasons' value='Submit Reason'>"+"<br>";
-
-        console.log("Reason submit displayed");
-
-        return false;
-
-
+        //k is incremented here so as to be able to use k in between. 
+        k++;
     }
+    document.getElementById('score_button_id').innerHTML = "Score: "+current_points;
+
     return false;
 
 }
 
 function evaluate_reasons_submission(){
     console.log("evaluate_reasons_submission");
+    document.getElementById('submit_reasons').hidden = true;
 
-    var checkboxes = document.getElementsByName('reasons');
-    for (i = 0; i < checkboxes.length; i++) {
-        if (checkboxes[i].type == 'checkbox' && checkboxes[i].checked) {
-            // assumption_selected = radios[i].value;
-            console.log("checkbox selected:"+checkboxes[i].value);
-            var reas_seq = checkboxes[i].value;
-            console.log("points for this reason :"+global_question["assumptions"][assumption_selected]["reasons"][reas_seq]["reason_points"]);
-            current_points += global_question["assumptions"][assumption_selected]["reasons"][reas_seq]["reason_points"];
-            console.log("modified points:"+current_points);
+    for (each_assm in assumption_selected){
+        var radios = document.getElementsByName('reasons_'+each_assm);
+        document.getElementsByName('reasons_'+each_assm).disabled = true;
+        for (i = 0; i < radios.length; i++) {
+            if (radios[i].type == 'radio' && radios[i].checked) {
+                // assumption_selected = radios[i].value;
+                console.log("radio selected:"+radios[i].value);
+                var reas_seq = radios[i].value;
+                console.log("points for this reason :"+global_question["assumptions"][each_assm]["reasons"][reas_seq]["reason_points"]);
+                current_points += global_question["assumptions"][each_assm]["reasons"][reas_seq]["reason_points"];
+                console.log("modified points:"+current_points);
 
+            }
         }
     }
-    document.getElementById('score_display_reasons').innerHTML = "Score obtained after reasons: "+current_points+"<br>";
+    document.getElementById('score_button_id').innerHTML = "Score: "+current_points;
     console.log("Score displayed");
     document.getElementById("next").disabled= false;
     return false;
@@ -98,7 +126,7 @@ function render_question(q) {
 
     var assumptions_ele = q["assumptions"];
     // window.alert("assumptions_ele length" + assumptions_ele.length);
-    create_radios(assumptions_ele);
+    create_checkboxes(assumptions_ele);
 
     //show submit button as well once all the radios are loaded.
 
@@ -110,9 +138,10 @@ function render_question(q) {
 
 }
 
-function create_radios(assumptions_ele){
+function create_checkboxes(assumptions_ele){
     for (i = 0; i < assumptions_ele.length; i++){
-            document.getElementById('assumptions').innerHTML += "<input type='radio' name='selection' value="+i+" id= rad_"+i+">"+assumptions_ele[i]["assumption_text"]+"<br>";
+            // document.getElementById('assumptions').innerHTML += "<input type='checkbox' name='selection' value="+i+" id= rad_"+i+">"+assumptions_ele[i]["assumption_text"]+"<br>";
+            document.getElementById('assumptions').innerHTML += "<div id='assm_"+i+"'><input type='checkbox' name='all_assumptions_chk_bx' value="+i+" id= chk_"+i+">"+assumptions_ele[i]["assumption_text"]+"<br></div>";
         }
 
 }
@@ -156,7 +185,7 @@ function load_nextquestion(){
     }
     document.getElementById("assumptions").innerHTML = "";
     document.getElementById("reasons").innerHTML = "";
-    document.getElementById("score_display_ele").innerHTML = "Score obtained : "+current_points;
+    // document.getElementById("score_display_ele").innerHTML = "Score obtained : "+current_points;
     document.getElementById("score_display_reasons").innerHTML= " ";
     load_file();
 }
