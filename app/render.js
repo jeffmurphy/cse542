@@ -2,29 +2,18 @@ var questions = [];
 var current_points = 0;
 var global_question= null;
 var assumption_selected = [];
+var submit_reasons_set = false;
+
 
 function evaluate_assumptions_submission() {
-    // window.alert("global question "+ global_question['questiontitle']);
-    console.log("global question "+ global_question['questiontitle']);
-    // document.getElementByName('Submit').style.display = 'block';
-    // document.getElementsByName('Submit').style.visibility = "hidden"; 
     document.getElementById('Submit_assm').hidden = true;
-    // document.getElementById('id').style.visibility = "hidden"; 
-    // document.getElementById('id').style.visibility = "hidden"; 
-    // document.getElementById('id').style.visibility = "hidden"; 
-    console.log("hiding working");
     var k = 0; //to populate assumption selected array. Multiple assumptions can be selected. 
-    var submit_reasons_set = false;
     var checkboxes = document.getElementsByName('all_assumptions_chk_bx');
-    // window.alert("till here");
+    submit_reasons_set = false;
     for (i = 0; i < checkboxes.length; i++) {
         //process only if the checkbox is checked. else just disable the checkbox.
-        // window.alert("till here");
         if (checkboxes[i].type == 'checkbox' && checkboxes[i].checked) {
-            console.log("checkbox value"+checkboxes[i].value);
             assumption_selected[k] = checkboxes[i].value; // if first checkbox checked then 0 stored in array. 
-            console.log("checkbox selected : "+checkboxes[i].value);
-
             var assumptions_ele = global_question["assumptions"];
             if(assumptions_ele[assumption_selected[k]]["assumption_type"]=="needed"){
                 document.getElementById("chk_"+i).disabled= true;
@@ -41,35 +30,10 @@ function evaluate_assumptions_submission() {
 
                 current_points+=assumptions_ele[assumption_selected[k]]["assumption_points"];
                 console.log("modified points:"+current_points);
-
-                // document.getElementById('score_display_ele').innerHTML += "Wrong selection!! Score: "+current_points+"<br>";
-                // document.getElementById('score_display_ele').innerHTML += "To increase, select reason"+"<br>";
-
-                console.log("Score displayed");
-
                 //Display reasons
-
                 var all_reasons = assumptions_ele[assumption_selected[k]]["reasons"];
 
-                for (j = 0; j < all_reasons.length; j++){
-                    document.getElementById('assm_'+i).innerHTML += "<input type='radio' name='reasons_"+i+"' value="+j+" id = rd_"+j+" >"+all_reasons[j]["reason_text"]+"<br>";
-                }
-                console.log("Reason checkboxes displayed");
-
-                //show submit button as well once all the radios are loaded. 
-
-                if(submit_reasons_set == false){
-                   document.getElementById('reasons').innerHTML += "<input type='submit' id='submit_reasons' name='Submit_reasons' value='Submit Reason'>";
-                   submit_reasons_set = true;
-                }
-
-
-                console.log("Reason submit displayed");
-
-
-                // return false;
-
-
+                display_reasons(i,all_reasons);
             }
         }
         else{
@@ -84,6 +48,22 @@ function evaluate_assumptions_submission() {
     document.getElementById('score_button_id').innerHTML = "Score: "+current_points;
 
     return false;
+
+}
+function display_reasons(i,all_reasons){
+
+    for (j = 0; j < all_reasons.length; j++){
+        document.getElementById('assm_'+i).innerHTML += "<input type='radio' name='reasons_"+i+"' value="+j+" id = rd_"+j+" >"+all_reasons[j]["reason_text"]+"<br>";
+    }
+    console.log("Reason checkboxes displayed");
+
+    //show submit button as well once all the radios are loaded. 
+
+    if(submit_reasons_set == false){
+       document.getElementById('reasons').innerHTML += "<input type='submit' id='submit_reasons' name='Submit_reasons' value='Submit Reason'>";
+       submit_reasons_set = true;
+    }
+    console.log("Reason submit displayed");
 
 }
 
@@ -115,69 +95,57 @@ function evaluate_reasons_submission(){
 
 
 
-function render_question(q) {
-    // window.alert("create question element");
-
-    //document.getElementById('testing').innerHTML = JSON.stringify(q, null, 2);
-
+function display_assumptions(q) {
     document.getElementById("questionbody").style.visibility = "visible";
-
-    document.getElementById('question_ele').innerHTML += "<br>" +"<b>"+q["questiontitle"]+"</b>" + "<br>";
-
+    // document.getElementById('question_ele').innerHTML += "<br>" +"<b>"+q["questiontitle"]+"</b>" + "<br>";
     var assumptions_ele = q["assumptions"];
-    // window.alert("assumptions_ele length" + assumptions_ele.length);
     create_checkboxes(assumptions_ele);
 
     //show submit button as well once all the radios are loaded.
 
     document.getElementById('assumptions').innerHTML += "<input type='submit' name='Submit' id='Submit_assm' value='Submit'>"+"<br>";
 
-    document.getElementById('realworld').innerHTML = "<img src='" + q['realworldmodelpath'] + "'/>";
-    document.getElementById('idealized').innerHTML = "<img src='" + q['idealizedmodelpath'] + "'/>";
+    display_images(q);
     return false;
-
 }
 
+function display_images(q){
+    document.getElementById('realworld').innerHTML = "<img src='" + q['realworldmodelpath'] + "'/>";
+    document.getElementById('idealized').innerHTML = "<img src='" + q['idealizedmodelpath'] + "'/>";
+}
 function create_checkboxes(assumptions_ele){
     for (i = 0; i < assumptions_ele.length; i++){
-            // document.getElementById('assumptions').innerHTML += "<input type='checkbox' name='selection' value="+i+" id= rad_"+i+">"+assumptions_ele[i]["assumption_text"]+"<br>";
             document.getElementById('assumptions').innerHTML += "<div id='assm_"+i+"'><input type='checkbox' name='all_assumptions_chk_bx' value="+i+" id= chk_"+i+">"+assumptions_ele[i]["assumption_text"]+"<br></div>";
         }
 
 }
-  
-function load_file() {
-    if (window.File && window.FileReader && window.FileList && window.Blob) {
-        var file = document.forms['aform']['uploadData'].files[0];
-        if (file) {
-            var fr = new FileReader();
-            fr.onload = function(e) {
-                try {
-                    questions = parse(e.target.result);
-                    if (questions.length == 0) alert("That file seems to have no questions.");
-                    else {
-                        var qn = Math.floor(questions.length * Math.random());
-                        var random_question = questions[qn];
-                        global_question = random_question;
-                        // render_question(random_question);
-                        // display_ques(random_question);
-                        render_question(questions[qn]);
-                    }
-                } catch (e) {
-                    alert("Something went wrong: " + e);
-                }
-            };
-            fr.readAsText(file);
+
+var reader = new XMLHttpRequest() || new ActiveXObject('MSXML2.XMLHTTP');
+
+function load_file() {//using ajax. because of security concerns javascript does not provide option to load file. 
+    document.getElementById('begin_button').hidden = true;
+    document.getElementById('welcome_message').hidden = true;
+    reader.open('get', '0questions.txt', true); 
+    reader.onreadystatechange = genRanQuestion;
+    reader.send(null);
+}
+
+function genRanQuestion() {
+    if(reader.readyState==4) {
+        questions = parse(reader.responseText);
+        if (questions.length == 0) alert("That file seems to have no questions.");
+        else {
+            var qn = Math.floor(questions.length * Math.random());
+            var random_question = questions[qn];
+            global_question = random_question;
+            display_assumptions(questions[qn]);
         }
+
     }
-    else {
-        alert('The File APIs are not fully supported in this browser.');
-    }
-    return false;
 }
 
 function load_nextquestion(){
-   document.getElementById('question_ele').innerHTML = "Question goes here";
+   // document.getElementById('question_ele').innerHTML = "Question goes here";
     var rad= document.getElementsByName("selection");
     remove_ele(rad);
     if(document.getElementsByName("reasons")!=null){

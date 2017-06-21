@@ -9,12 +9,14 @@
 	<script src="render.js"></script>
 	<script type="text/javascript" src = 'jquery-3.2.1.js'></script>
 
-	<hr>
+	<p id='testing_file_reading'></p>
 	<form name='aform'>
 
-	Select a topic file: <input name="uploadData" type="file"> 
+	<!-- Select a topic file: <input name="uploadData" type="file">  -->
 	<!-- <input type="submit" value="submit" onclick="return foo();" /> -->
-	<button type="button" name="button" id='button' onclick="return load_file();">Load File</button>
+	<h3 id='welcome_message'> Welcome </h3>
+
+	<button type="button" name="button" id='begin_button' onclick="return load_file();">Begin</button>
 
 	</form>
 
@@ -25,13 +27,13 @@
 
 			<div id="realworld"></div>
 			<div id="idealized"></div>
-			Choose the correct assumption:
-			<!-- <div id="assumptions">
+<!-- 			Choose the correct assumption:
+ -->			<!-- <div id="assumptions">
 				fillme in using the render() function
 			</div> -->
 
 	    <div id= "question_div">
-		<p id="question_ele">Question goes here. </p>
+		<!-- <p id="question_ele">Question goes here. </p> -->
 		<!-- <button id="btn1" onclick="return createQuestionElement();">Set Text</button> -->
 		<form id="assumptions" onsubmit="return evaluate_assumptions_submission();">
 		<!-- <form id="assumptions" onsubmit="window.alert("working");"> -->

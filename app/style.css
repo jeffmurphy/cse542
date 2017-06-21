@@ -34,3 +34,13 @@
     right: 0;
 }
 
+/*#begin_button {
+    padding: 70px 0;
+    border: 3px solid green;
+    text-align: center;
+}*/
+
+input[type=radio] {
+    margin-left: 15px;
+    font-size: 18pt;
+}
