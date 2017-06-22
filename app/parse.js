@@ -16,19 +16,19 @@ function isEmpty(obj) {
 function validate(config) {
     /* TODO
      must hold:
-     forall els:
-     questiontext, type, points must exist
-     assumptions.length >= 3
+        forall els:
+            questiontext, type, points must exist
+            assumptions.length >= 3
 
-     foreach assumption:
-     text, type, points must exist
-     assert type in [needed, notneeded, complicatedfactor]
+        foreach assumption:
+            text, type, points must exist
+            assert type in [needed, notneeded, complicatedfactor]
 
-     any assumptions that are != needed:
-     reasons.length >= 2
-     foreach reason:
-     text, type, points must exist
-     assert type in [true, false]
+        any assumptions that are != needed:
+            reasons.length >= 2
+            foreach reason:
+                text, type, points must exist
+                assert type in [true, false]
 
      if any of the above is violated, throw an error
      */
@@ -183,6 +183,8 @@ var parser = function(text, check) {
     ];
 };
 
+/* for testing using nodejs... */
+/*
 var Ptest = `questiontitle: xxxx
 realworldmodelpath: relative/path/no/absolutes.png
 idealizedmodelpath: relative/path/no/absolutes.png
@@ -209,3 +211,4 @@ assumption_points: 1
 var P = new parser(Ptest);
 var XX = P.parse();
 console.log(JSON.stringify(XX, null, "  "));
+*/
