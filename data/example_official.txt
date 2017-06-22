@@ -1,50 +1,84 @@
-https://piazza.com/class/j32aoqkct9v4fn?cid=10
+questiontitle:Hip Joint Force Analysis
+realworldmodelpath:RealWorld1.png
+idealizedmodelpath:IdealizedModel1.png
 
-First (Partial) Problem
+assumption_text:Hip acts as a pivot point (no lifting off the bed)
+assumption_type:needed
+assumption_points:1
 
-Andrew and Siva sent me files that (almost) make up a complete problem. All the assumptions that look real ARE correct assumptions. I went ahead and made some additions to complete the example (if you are uncertain as to which I added, think about which are obviously added to be incorrect/complicating). Because there are two different idealized model images, you should define these as two potential problems for your program. I am hoping/expecting to see your programs using this example next week. Thanks!
+assumption_text:Forces are reasonably approximated using static analysis
+assumption_type:needed
+assumption_points:1
+
+assumption_text:Patient does not slide on the bed
+assumption_type:needed
+assumption_points:1
+
+assumption_text:Lower leg remains approximately perpendicular to upper leg
+assumption_type:needed
+assumption_points:1
+
+
+assumption_text:Incorrect Assumption #1.1
+assumption_type:unneeded
+assumption_points:-1
+ reason_text:Valid Reason #1.1.1
+ reason_type:true
+ reason_points:1
+ reason_text:Invalid Reason #1.1.2
+ reason_type:false
+ reason_points:-1
+ reason_text:Invalid Reason #1.1.3
+ reason_type:false
+ reason_points:-1
+
+assumption_text:Incorrect Assumption #1.2
+assumption_type:unneeded
+assumption_points:-1
+ reason_text:Invalid Reason #x.y.z
+ reason_type:false
+ reason_points:-1
+ reason_text:Invalid Reason #hashtag
+ reason_type:false
+ reason_points:-1
+ reason_text:Invalid Reason #HertzRules!
+ reason_type:false
+ reason_points:-1
+ reason_text:Valid
+ reason_type:true
+ reason_points:1
+
+assumption_text:Complicating Assumption #Who Cares I Am Making All This Up?
+assumption_type:unneeded
+assumption_points:-1
+
+assumption_text:Incorrect Assumption that includes a lot of text to make certain you can handle it #1.3
+assumption_type:unneeded
+assumption_points:-1
+ reason_text:Valid Reason #ExamplesAreHard
+ reason_type:true
+ reason_points:1
+
+
+
+questiontitle:Second Example
+realworldmodelpath:RealWorld2.png
+idealizedmodelpath:IdealizedModel2.png
+
+assumption_text:Forces are reasonably approximated using static analysis
+assumption_type:needed
+assumption_points:1
+
+assumption_text:Lower leg remains approximately perpendicular to upper leg
+assumption_type:needed
+assumption_points:1
+
+assumption_text:Hip acts as a pivot point (no lifting off the bed)
+assumption_type:needed
+assumption_points:1
+
+assumption_text:Patient does not slide on the bed
+assumption_type:needed
+assumption_points:1
 
  
-First Example	
-
-Real-world Situation
-
-Idealized Model
-
-Assumptions
-
-    Hip acts as a pivot point (no lifting off the bed)
-    Incorrect Assumption #1.1
-        Valid Reason #1.1.1
-        Invalid Reason #1.1.2
-        Invalid Reason #1.1.3
-    Lower leg remains approximately perpendicular to upper leg
-    Incorrect Assumption #1.2
-        Invalid Reason #1.2.1
-        Invalid Reason #1.2.2
-        Invalid Reason #1.2.3
-        Valid Reason #1.2.4
-    Forces are reasonably approximated using static analysis
-    Patient does not slide on the bed
-    Complicating Assumption #Who Cares I Am Making All This Up?
-        Invalid Reason #x.y.z
-        Valid
-        Invalid Reason #hashtag
-        Invalid Reason #HertzRules!
-    Incorrect Assumption that includes a lot of text to make certain you can handle it #1.3
-        Valid Reason #ExamplesAreHard
-
-	
-Second Example
-
-Real-world Situation
-
-Idealized Model
-
-Assumptions
-
-    Forces are reasonably approximated using static analysis
-    Lower leg remains approximately perpendicular to upper leg
-    Hip acts as a pivot point (no lifting off the bed)
-    Patient does not slide on the bed
-
