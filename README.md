@@ -14,7 +14,7 @@ CSE542 Team Grit Hub
   a) Click "Choose File"
   b) Select 0Questions.txt present in the folder titled "data"
   c) Click on the button titled "Click me"
-4) You will be presented with a random question from the questions present in 0questions.txt
+4) You will be presented with a random question from the questions present in example_official.txt
 5) Select one of the options and click "Submit"
 6) Scores will be displayed below the submit button according the the selection of the user.
 7) If an incorrect option or complicating factor is selected by the user and submit is clicked, the user will be presented        with reasons which the user can then select to affect his score.
