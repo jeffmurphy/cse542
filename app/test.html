@@ -4,10 +4,11 @@
 </head>
 
 <body>
-
+	<link href="bootstrap/css/bootstrap.css" rel="stylesheet">
 	<script src="parse.js"></script>
 	<script src="render.js"></script>
 	<script type="text/javascript" src = 'jquery-3.2.1.js'></script>
+	<div id="all_ins">
 	<div id = "instructions" style=" padding:  1%">
 		<p><b>1. Click on the "Choose File" button</b></p>
 		<p><b>2. Go to the data folder and select example_official.txt</b></p>
@@ -22,22 +23,35 @@
 	<!-- <h3 id='welcome_message'> Welcome </h3> -->
 
 	<!-- <button type="button" name="button" id='begin_button' onclick="return load_file();">Begin</button> -->
-	<button type="button" name="button" id='button' onclick="return load_file();">Load File</button>
+	<button type="button" name="button" id='button' class='btn btn-primary' onclick="return load_file();">Load File</button>
 
 
 	</form>
+	</div>
 
-	<div id="questionbody" style="visibility: hidden;">
+	<div id="questionbody" style="visibility: hidden;" class="container-fluid">
+		<div class="row justify-content-end">
+			<div class="col">
+				Random Question:
+				<div id="testing" style="font-family: monospace; white-space: pre;"></div>
+			</div>
+			<div class="col">
+				<button type="button" name="score_button" class="btn btn-primary btn-lg" style="float: right" id="score_button_id"> Score : 0</button>
+			</div>
+		</div>
 
-		Random Question:
-		<div id="testing" style="font-family: monospace; white-space: pre;"></div>
-
-			<div id="realworld"></div>
-			<div id="idealized"></div>
+		<div class="row">
+			<div class="col">
+				<div id="realworld"></div>
+			</div>
+			<div class="col">
+				<div id="idealized"></div>
+			</div>
 <!-- 			Choose the correct assumption:
  -->			<!-- <div id="assumptions">
 				fillme in using the render() function
 			</div> -->
+		</div>
 
 	    <div id= "question_div">
 		<!-- <p id="question_ele">Question goes here. </p> -->
@@ -53,11 +67,9 @@
 		<form id="reasons" onsubmit="return evaluate_reasons_submission();">
 		</form>
 		<p id="score_display_reasons"><br></p>
-		<button type="button" name="score_button" id="score_button_id"> Score : 0</button>
-
 	    </div>
 
-		<button type="button" name="next" id= "next" onclick = "load_nextquestion();" disabled=true>Next</button>
+		<button type="button" name="next" id= "next" class="btn btn-primary" onclick = "load_nextquestion();" disabled=true>Next</button>
 
 	</div>
 

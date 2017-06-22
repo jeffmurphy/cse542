@@ -60,7 +60,7 @@ function display_reasons(i,all_reasons){
     //show submit button as well once all the radios are loaded. 
 
     if(submit_reasons_set == false){
-       document.getElementById('reasons').innerHTML += "<input type='submit' id='submit_reasons' name='Submit_reasons' value='Submit Reason'>";
+       document.getElementById('reasons').innerHTML += "<input type='submit' id='submit_reasons' name='Submit_reasons' class='btn btn-primary' value='Submit Reason'>";
        submit_reasons_set = true;
     }
     console.log("Reason submit displayed");
@@ -103,15 +103,15 @@ function display_assumptions(q) {
 
     //show submit button as well once all the radios are loaded.
 
-    document.getElementById('assumptions').innerHTML += "<input type='submit' name='Submit' id='Submit_assm' value='Submit'>"+"<br>";
+    document.getElementById('assumptions').innerHTML += "<input type='submit' name='Submit' id='Submit_assm' class='btn btn-primary' value='Submit'>"+"<br>";
 
     display_images(q);
     return false;
 }
 
 function display_images(q){
-    document.getElementById('realworld').innerHTML = "<img src='" + q['realworldmodelpath'] + "'/>";
-    document.getElementById('idealized').innerHTML = "<img src='" + q['idealizedmodelpath'] + "'/>";
+    document.getElementById('realworld').innerHTML = "<img src='" + q['realworldmodelpath'] + "' class='img-fluid'/>";
+    document.getElementById('idealized').innerHTML = "<img src='" + q['idealizedmodelpath'] + "' class='img-fluid'/>";
 }
 function create_checkboxes(assumptions_ele){
     for (i = 0; i < assumptions_ele.length; i++){
@@ -148,6 +148,7 @@ function load_file() {
     else {
         alert('The File APIs are not fully supported in this browser.');
     }
+    document.getElementById("all_ins").hidden = true;
     return false;
 }
 

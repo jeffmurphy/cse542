@@ -7,7 +7,7 @@
     float: left;
 }
 
-#realworld img {
+/*#realworld img {
     width: 200px;
     height: 200px;
 }
@@ -15,14 +15,14 @@
 #idealized img {
     width: 200px;
     height: 200px;
-}
+}*/
 
 #jsonconfig {
     border: 1px solid black;
 }
 
 
-#score_button_id {
+/*#score_button_id {
     line-height: 30px;
     width: 200px;
     font-size: 18pt;
@@ -32,7 +32,7 @@
     position: absolute;
     top: 0;
     right: 0;
-}
+}*/
 
 /*#begin_button {
     padding: 70px 0;
