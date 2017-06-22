@@ -9,50 +9,49 @@
 	<script src="render.js"></script>
 	<script type="text/javascript" src = 'jquery-3.2.1.js'></script>
 
-	Brief Instructions:
-	<ol>
-	<li> Click 'Choose File'
-	<li> Select  "0questions.txt" in the DATA folder
-	<li> Click "Load File"
-	</ol>
-	<hr>
+	<p id='testing_file_reading'></p>
 	<form name='aform'>
 
-	Select a topic file: <input name="uploadData" type="file"> 
+	<!-- Select a topic file: <input name="uploadData" type="file">  -->
 	<!-- <input type="submit" value="submit" onclick="return foo();" /> -->
-	<button type="button" name="button" id='button' onclick="return load_file();">Load File</button>
+	<h3 id='welcome_message'> Welcome </h3>
+
+	<button type="button" name="button" id='begin_button' onclick="return load_file();">Begin</button>
 
 	</form>
 
 	<div id="questionbody" style="visibility: hidden;">
 
-	Random Question:
-	<div id="testing" style="font-family: monospace; white-space: pre;"></div>
+		Random Question:
+		<div id="testing" style="font-family: monospace; white-space: pre;"></div>
 
-		<div id="realworld"></div>
-		<div id="idealized"></div>
-		Choose the correct assumption:
-		<!-- <div id="assumptions">
-			fillme in using the render() function
-		</div> -->
+			<div id="realworld"></div>
+			<div id="idealized"></div>
+<!-- 			Choose the correct assumption:
+ -->			<!-- <div id="assumptions">
+				fillme in using the render() function
+			</div> -->
 
-    <div id= "question_div">
-	<p id="question_ele">Question goes here. </p>
-	<!-- <button id="btn1" onclick="return createQuestionElement();">Set Text</button> -->
-	<form id="assumptions" onsubmit="return evaluate_submission();">
-	<!-- <form id="assumptions" onsubmit="window.alert("working");"> -->
+	    <div id= "question_div">
+		<!-- <p id="question_ele">Question goes here. </p> -->
+		<!-- <button id="btn1" onclick="return createQuestionElement();">Set Text</button> -->
+		<form id="assumptions" onsubmit="return evaluate_assumptions_submission();">
+		<!-- <form id="assumptions" onsubmit="window.alert("working");"> -->
 
-	</form>
+		</form>
 
 
-	<p id="score_display_ele">Score displayed here <br></p>
+		<p id="score_display_ele"><br></p>
 
-	<form id="reasons" onsubmit="return evaluate_reasons_submission();">
-	</form>
-	<p id="score_display_reasons"> display score after reasons here. <br></p>
-    </div>
+		<form id="reasons" onsubmit="return evaluate_reasons_submission();">
+		</form>
+		<p id="score_display_reasons"><br></p>
+		<button type="button" name="score_button" id="score_button_id"> Score : 0</button>
+
+	    </div>
 
 		<button type="button" name="next" id= "next" onclick = "load_nextquestion();" disabled=true>Next</button>
+
 	</div>
 
     
