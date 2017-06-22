@@ -1,27 +1,16 @@
+<!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>QUnit Example</title>
+  <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.3.3.css">
 </head>
-
 <body>
-
-
-<H2>Unit Tests</H2>
-<UL>
-    <LI>For tests named "good_" the status should be "SUCCEEDED". </LI>
-    <LI>For tests named "bad_" the status should be "FAILED" and a reason. </LI>
-</UL>
-
-<h2>Results</h2>
-<div id="output" style="font-family: monospace; white-space: pre;"></div>
-
-
-
-<script src="parse.js"></script>
-<script src="render.js"></script>
-<script src="parse-unittests.js"></script>
-<script>runtests();</script>
-
+  <div id="qunit"></div>
+  <div id="qunit-fixture"></div>
+  <script src="https://code.jquery.com/qunit/qunit-2.3.3.js"></script>
+  <script src="parse.js"></script>
+  <script src="parse-tests.js"></script>
 </body>
 </html>
-

@@ -125,14 +125,15 @@ var reader = new XMLHttpRequest() || new ActiveXObject('MSXML2.XMLHTTP');
 function load_file() {//using ajax. because of security concerns javascript does not provide option to load file. 
     document.getElementById('begin_button').hidden = true;
     document.getElementById('welcome_message').hidden = true;
-    reader.open('get', '0questions.txt', true); 
+    reader.open('get', '0questions.txt', true);
     reader.onreadystatechange = genRanQuestion;
     reader.send(null);
 }
 
 function genRanQuestion() {
     if(reader.readyState==4) {
-        questions = parse(reader.responseText);
+        var P = new parser(reader.responseText);
+        var questions = P.parse();
         if (questions.length == 0) alert("That file seems to have no questions.");
         else {
             var qn = Math.floor(questions.length * Math.random());
