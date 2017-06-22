@@ -162,6 +162,7 @@ function load_nextquestion(){
     document.getElementById("reasons").innerHTML = "";
     // document.getElementById("score_display_ele").innerHTML = "Score obtained : "+current_points;
     document.getElementById("score_display_reasons").innerHTML= " ";
+    document.getElementById("next").disabled= true;
     load_file();
 }
 
