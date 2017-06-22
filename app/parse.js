@@ -79,16 +79,19 @@ var parser = function(text, check) {
         Q = {};
         assumptions = [];
         Q.questiontitle = x.replace(kw, "");
+        return Q.questiontitle;
     };
 
     this.parse_realworldmodelpath = function(kw, x) {
         if (isEmpty(Q)) throw "invalid file format: no questiontitle";
         Q.realworldmodelpath = x.replace(kw, "");
+        return Q.realworldmodelpath;
     };
 
     this.parse_idealizedmodelpath = function(kw, x) {
         if (isEmpty(Q)) throw "invalid file format: no questiontitle";
         Q.idealizedmodelpath = x.replace(kw, "");
+        return Q.idealizedmodelpath;
     };
 
     this.parse_assumption_text = function(kw, x) {
@@ -102,18 +105,21 @@ var parser = function(text, check) {
         }
         A = {};
         A.assumption_text = x.replace(kw, "");
+        return A.assumption_text;
     };
 
     this.parse_assumption_type = function(kw, x) {
         if (isEmpty(Q)) throw "invalid file format: no questiontitle";
         if (isEmpty(A)) throw "invalid file format: no assumption_text";
         A.assumption_type = x.replace(kw, "");
+        return A.assumption_type;
     };
 
     this.parse_assumption_points = function(kw, x) {
         if (isEmpty(Q)) throw "invalid file format: no questiontitle";
         if (isEmpty(A)) throw "invalid file format: no assumption_text";
         A.assumption_points = parseInt(x.replace(kw, ""));
+        return A.assumption_points;
     };
 
     this.parse_reason_text = function(kw, x) {
@@ -124,18 +130,21 @@ var parser = function(text, check) {
         }
         R = {};
         R.reason_text = x.replace(kw, "");
+        return R.reason_text;
     };
 
     this.parse_reason_type = function(kw, x) {
         if (isEmpty(Q)) throw "invalid file format: no questiontitle";
         if (assumptions.length === 0) throw "invalid file format: reasons before assumptions";
         R.reason_type = x.replace(kw, "");
+        return R.reason_type;
     };
 
     this.parse_reason_points = function(kw, x) {
         if (isEmpty(Q)) throw "invalid file format: no questiontitle";
         if (assumptions.length === 0) throw "invalid file format: reasons before assumptions";
         R.reason_points = parseInt(x.replace(kw, ""));
+        return R.reason_points;
     };
 
 
