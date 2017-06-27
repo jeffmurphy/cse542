@@ -120,35 +120,23 @@ function create_checkboxes(assumptions_ele){
 
 }
 
-function load_file() {
-    if (window.File && window.FileReader && window.FileList && window.Blob) {
-        var file = document.forms['aform']['uploadData'].files[0];
-        if (file) {
-            var fr = new FileReader();
-            fr.onload = function(e) {
-                try {
-                    var p = new parser(e.target.result);
-                    questions = p.parse();
-                    if (questions.length == 0) alert("That file seems to have no questions.");
-                    else {
-                        var qn = Math.floor(questions.length * Math.random());
-                        var random_question = questions[qn];
-                        global_question = random_question;
-                        // render_question(random_question);
-                        // display_ques(random_question);
-                        display_assumptions(questions[qn]);
-                    }
-                } catch (e) {
-                    alert("Something went wrong: " + e);
-                }
-            };
-            fr.readAsText(file);
+function load_questions() {
+    try {
+        var p = new parser(questions_config);
+        questions = p.parse();
+        if (questions.length == 0)
+            alert("That file seems to have no questions.");
+        else {
+            var qn = Math.floor(questions.length * Math.random());
+            var random_question = questions[qn];
+            global_question = random_question;
+            // render_question(random_question);
+            // display_ques(random_question);
+            display_assumptions(questions[qn]);
         }
+    } catch (e) {
+        alert("Something went wrong: " + e);
     }
-    else {
-        alert('The File APIs are not fully supported in this browser.');
-    }
-    document.getElementById("all_ins").hidden = true;
     return false;
 }
 
@@ -164,7 +152,7 @@ function load_nextquestion(){
     // document.getElementById("score_display_ele").innerHTML = "Score obtained : "+current_points;
     document.getElementById("score_display_reasons").innerHTML= " ";
     document.getElementById("next").disabled= true;
-    load_file();
+    load_questions();
 }
 
 function remove_ele(ele){
