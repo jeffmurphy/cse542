@@ -1,4 +1,8 @@
 var questions = [];
+var question_number = -1;
+var questions_shown = 0;
+var max_questions = 0;
+
 var current_points = 0;
 var global_question= null;
 var assumption_selected = [];
@@ -174,39 +178,51 @@ function create_checkboxes(assumptions_ele){
 
 }
 
-function load_file() {
-    if (window.File && window.FileReader && window.FileList && window.Blob) {
-        var file = document.forms['aform']['uploadData'].files[0];
-        if (file) {
-            var fr = new FileReader();
-            fr.onload = function(e) {
-                try {
-                    var p = new parser(e.target.result);
-                    questions = p.parse();
-                    if (questions.length == 0) alert("That file seems to have no questions.");
-                    else {
-                        var qn = Math.floor(questions.length * Math.random());
-                        var random_question = questions[qn];
-                        global_question = random_question;
-                        // render_question(random_question);
-                        // display_ques(random_question);
-                        display_assumptions(questions[qn]);
-                    }
-                } catch (e) {
-                    alert("Something went wrong: " + e);
-                }
-            };
-            fr.readAsText(file);
+function select_random_question() {
+    if (questions.length == 0) return false;
+    question_number = Math.floor(questions.length * Math.random());
+    var random_question = questions.splice(question_number, 1)[0];
+    global_question = random_question;
+    return true;
+}
+
+function display_question() {
+    set_questiontitle(global_question.questiontitle);
+    display_assumptions(global_question);
+}
+
+function load_questions() {
+    try {
+        var p = new parser(questions_config);
+        questions = p.parse();
+        max_questions = questions.length;
+        questions_shown = 1;
+        if (questions.length == 0)
+            alert("That file seems to have no questions.");
+        else {
+            select_random_question();
+            set_progress_bar();
+            display_question();
         }
+    } catch (e) {
+        alert("Something went wrong: " + e);
     }
-    else {
-        alert('The File APIs are not fully supported in this browser.');
-    }
-    document.getElementById("all_ins").hidden = true;
     return false;
 }
 
-function load_nextquestion(){
+function set_questiontitle(t) {
+    document.getElementById('questiontitle').innerHTML = t;
+}
+
+function set_progress_bar(p) {
+    var percent_done = (100 * (questions_shown-1) / max_questions) + '%';
+    if (p) percent_done = p + '%';
+    console.log('width: ' + percent_done);
+    document.getElementById('progbar').style = 'width: ' + percent_done;
+    document.getElementById('readable_percent_done').innerHTML = percent_done + " Complete";
+}
+
+function load_nextquestion() {
    // document.getElementById('question_ele').innerHTML = "Question goes here";
     var rad= document.getElementsByName("selection");
     remove_ele(rad);
@@ -218,9 +234,18 @@ function load_nextquestion(){
     // document.getElementById("score_display_ele").innerHTML = "Score obtained : "+current_points;
     document.getElementById("score_display_reasons").innerHTML= " ";
     document.getElementById("next").disabled= true;
-    load_file();
-}
 
+    if (select_random_question()) {
+        questions_shown += 1;
+        set_progress_bar();
+        display_question();
+    }
+    else {
+        document.getElementById('question_images').hidden = true;
+        set_progress_bar(100);
+        set_questiontitle("You've completed all of the questions!");
+    }
+}
 function remove_ele(ele){
     for(i=0;i<ele.length;i++){
         var id = ele[i].getAttribute('id');
