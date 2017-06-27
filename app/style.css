@@ -7,6 +7,14 @@
     float: left;
 }
 
+#questiontitle {
+    font-size: large;
+    font-style: normal;
+    border-bottom: 2px solid blue;
+    text-decoration: underline;
+    font-size: 1.25rem;
+}
+
 /*#realworld img {
     width: 200px;
     height: 200px;

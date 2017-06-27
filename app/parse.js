@@ -305,6 +305,6 @@ assumption_points:1
 
 `;
 
- var P = new parser(Ptest2);
-var XX = P.parse();
-console.log(JSON.stringify(XX, null, "  "));
+// var P = new parser(Ptest2);
+// var XX = P.parse();
+// console.log(JSON.stringify(XX, null, "  "));

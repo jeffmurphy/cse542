@@ -132,6 +132,7 @@ function load_questions() {
             global_question = random_question;
             // render_question(random_question);
             // display_ques(random_question);
+            document.getElementById('questiontitle').innerHTML = global_question.questiontitle;
             display_assumptions(questions[qn]);
         }
     } catch (e) {
