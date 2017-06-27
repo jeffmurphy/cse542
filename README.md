@@ -14,16 +14,18 @@ Questions are parsed using parse.js file.
 The questions and the options are displayed on browser with test.html.
 The scores are evaluated using render.js.
 
-Code Organization:
+
+CODE ORGANIZATION:
+
 	a. Render.js: The score is evaluated and questions from the parse.js are rendered with render.js functions.
-		1.	evaluate_assumptions_submission(): Evaluated scores on the basis of reason selected.
-		2.	display_reasons(i,all_reasons): Displays reason for incorrect option or complicating factor.
-		3.	evaluate_reasons_submission(): Evaluates if the reason submitted is correct and evaluates the score after submission.
-		4.	display_assumptions(q): Display assumptions related to the randomly selected question.
-		5.	display_images(q): Loads and display pair of images related to the question selected from parse.js.
-		6.	load_questions(): Selects and loads a question randomly.
-		7.	load_nextquestion(): Upon the 'Next' button click, this function clears the screen and replace the page content with a new question set.
-		8.	remove_ele(ele): Removes the selected element from the screen.
+		1)	evaluate_assumptions_submission(): Evaluated scores on the basis of reason selected.
+		2)	display_reasons(i,all_reasons): Displays reason for incorrect option or complicating factor.
+		3)	evaluate_reasons_submission(): Evaluates if the reason submitted is correct and evaluates the score after submission.
+		4)	display_assumptions(q): Display assumptions related to the randomly selected question.
+		5)	display_images(q): Loads and display pair of images related to the question selected from parse.js.
+		6)	load_questions(): Selects and loads a question randomly.
+		7)	load_nextquestion(): Upon the 'Next' button click, this function clears the screen and replace the page content with a new question set.
+		8)	remove_ele(ele): Removes the selected element from the screen.
 	
 	b. Parse.js: 
 	/*PLEASE ADD SOME DESCRIPTION HERE*/
