@@ -8,9 +8,53 @@ var global_question= null;
 var assumption_selected = [];
 var submit_reasons_set = false;
 
+function display_feedback_for_assumptions(){
+    // window.alert("display_feedback_for_assumptions");
+    var assumptions_ele = global_question["assumptions"];
+    for(i=0;i<assumptions_ele.length;i++){
+        // window.alert(i);
+        var existing_content = document.getElementById("assm_"+i).innerHTML;
+        if(assumptions_ele[i]["assumption_type"]=="needed"){
+           // window.alert("needed"); 
+           // document.getElementById("assm_"+i).innerHTML = existing_content.replace('<br>',' ');
+           // document.getElementById("assm_"+i).innerHTML += "<div class='alert alert-success'><strong>Success!</strong> Indicates a successful or positive action.</div>";
+           // document.getElementById("assm_"+i).innerHTML +="<p>hi</p>"
+           document.getElementById("assm_"+i).style.color = "green"; 
+
+        }
+        else if(assumptions_ele[i]["assumption_type"]=="unneeded"){
+           document.getElementById("assm_"+i).style.color = "red"; 
+
+        }
+        else if(assumptions_ele[i]["assumption_type"]=="complicatingfactor"){
+           document.getElementById("assm_"+i).style.color = "blue"; 
+
+        }
+    }
+}
+
+function check_atleast_one_selected(){
+    var atleast_one_selected = false;
+
+    var checkboxes = document.getElementsByName('all_assumptions_chk_bx');
+    for (i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].type == 'checkbox' && checkboxes[i].checked) {
+            atleast_one_selected = true;
+        }   
+   
+    }
+
+    if(atleast_one_selected == false){
+        return false;
+    }
+    return true;
+}
 
 function evaluate_assumptions_submission() {
-    document.getElementById('Submit_assm').hidden = true;
+    if(!check_atleast_one_selected()){
+        window.alert("Select Assumptions!!!");
+        return false;
+    }
     var k = 0; //to populate assumption selected array. Multiple assumptions can be selected. 
     var checkboxes = document.getElementsByName('all_assumptions_chk_bx');
     submit_reasons_set = false;
@@ -37,7 +81,10 @@ function evaluate_assumptions_submission() {
                 //Display reasons
                 var all_reasons = assumptions_ele[assumption_selected[k]]["reasons"];
 
-                display_reasons(i,all_reasons);
+                if(all_reasons != null){
+                    display_reasons(i,all_reasons);
+                }
+
             }
         }
         else{
@@ -49,6 +96,11 @@ function evaluate_assumptions_submission() {
         //k is incremented here so as to be able to use k in between. 
         k++;
     }
+   
+    display_feedback_for_assumptions();
+
+    document.getElementById('Submit_assm').hidden = true;
+
     document.getElementById('score_button_id').innerHTML = "Score: "+current_points;
 
     return false;
@@ -72,6 +124,7 @@ function display_reasons(i,all_reasons){
 }
 
 function evaluate_reasons_submission(){
+
     console.log("evaluate_reasons_submission");
     document.getElementById('submit_reasons').hidden = true;
 
@@ -79,6 +132,7 @@ function evaluate_reasons_submission(){
         var radios = document.getElementsByName('reasons_'+each_assm);
         document.getElementsByName('reasons_'+each_assm).disabled = true;
         for (i = 0; i < radios.length; i++) {
+            radios[i].disabled = true;
             if (radios[i].type == 'radio' && radios[i].checked) {
                 // assumption_selected = radios[i].value;
                 console.log("radio selected:"+radios[i].value);
