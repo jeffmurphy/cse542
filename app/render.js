@@ -1,5 +1,7 @@
 var questions = [];
 var question_number = -1;
+var questions_shown = 0;
+var max_questions = 0;
 
 var current_points = 0;
 var global_question= null;
@@ -139,10 +141,13 @@ function load_questions() {
     try {
         var p = new parser(questions_config);
         questions = p.parse();
+        max_questions = questions.length;
+        questions_shown = 1;
         if (questions.length == 0)
             alert("That file seems to have no questions.");
         else {
             select_random_question();
+            set_progress_bar();
             display_question();
         }
     } catch (e) {
@@ -153,6 +158,14 @@ function load_questions() {
 
 function set_questiontitle(t) {
     document.getElementById('questiontitle').innerHTML = t;
+}
+
+function set_progress_bar(p) {
+    var percent_done = (100 * (questions_shown-1) / max_questions) + '%';
+    if (p) percent_done = p + '%';
+    console.log('width: ' + percent_done);
+    document.getElementById('progbar').style = 'width: ' + percent_done;
+    document.getElementById('readable_percent_done').innerHTML = percent_done + " Complete";
 }
 
 function load_nextquestion() {
@@ -168,11 +181,14 @@ function load_nextquestion() {
     document.getElementById("score_display_reasons").innerHTML= " ";
     document.getElementById("next").disabled= true;
 
-    if (select_random_question() == true) {
+    if (select_random_question()) {
+        questions_shown += 1;
+        set_progress_bar();
         display_question();
     }
     else {
         document.getElementById('question_images').hidden = true;
+        set_progress_bar(100);
         set_questiontitle("You've completed all of the questions!");
     }
 }
