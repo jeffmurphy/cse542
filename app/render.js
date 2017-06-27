@@ -1,4 +1,6 @@
 var questions = [];
+var question_number = -1;
+
 var current_points = 0;
 var global_question= null;
 var assumption_selected = [];
@@ -120,6 +122,19 @@ function create_checkboxes(assumptions_ele){
 
 }
 
+function select_random_question() {
+    if (questions.length == 0) return false;
+    question_number = Math.floor(questions.length * Math.random());
+    var random_question = questions.splice(question_number, 1)[0];
+    global_question = random_question;
+    return true;
+}
+
+function display_question() {
+    set_questiontitle(global_question.questiontitle);
+    display_assumptions(global_question);
+}
+
 function load_questions() {
     try {
         var p = new parser(questions_config);
@@ -127,13 +142,8 @@ function load_questions() {
         if (questions.length == 0)
             alert("That file seems to have no questions.");
         else {
-            var qn = Math.floor(questions.length * Math.random());
-            var random_question = questions[qn];
-            global_question = random_question;
-            // render_question(random_question);
-            // display_ques(random_question);
-            document.getElementById('questiontitle').innerHTML = global_question.questiontitle;
-            display_assumptions(questions[qn]);
+            select_random_question();
+            display_question();
         }
     } catch (e) {
         alert("Something went wrong: " + e);
@@ -141,7 +151,11 @@ function load_questions() {
     return false;
 }
 
-function load_nextquestion(){
+function set_questiontitle(t) {
+    document.getElementById('questiontitle').innerHTML = t;
+}
+
+function load_nextquestion() {
    // document.getElementById('question_ele').innerHTML = "Question goes here";
     var rad= document.getElementsByName("selection");
     remove_ele(rad);
@@ -153,9 +167,15 @@ function load_nextquestion(){
     // document.getElementById("score_display_ele").innerHTML = "Score obtained : "+current_points;
     document.getElementById("score_display_reasons").innerHTML= " ";
     document.getElementById("next").disabled= true;
-    load_questions();
-}
 
+    if (select_random_question() == true) {
+        display_question();
+    }
+    else {
+        document.getElementById('question_images').hidden = true;
+        set_questiontitle("You've completed all of the questions!");
+    }
+}
 function remove_ele(ele){
     for(i=0;i<ele.length;i++){
         var id = ele[i].getAttribute('id');
