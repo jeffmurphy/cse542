@@ -4,9 +4,53 @@ var global_question= null;
 var assumption_selected = [];
 var submit_reasons_set = false;
 
+function display_feedback_for_assumptions(){
+    // window.alert("display_feedback_for_assumptions");
+    var assumptions_ele = global_question["assumptions"];
+    for(i=0;i<assumptions_ele.length;i++){
+        // window.alert(i);
+        var existing_content = document.getElementById("assm_"+i).innerHTML;
+        if(assumptions_ele[i]["assumption_type"]=="needed"){
+           // window.alert("needed"); 
+           // document.getElementById("assm_"+i).innerHTML = existing_content.replace('<br>',' ');
+           // document.getElementById("assm_"+i).innerHTML += "<div class='alert alert-success'><strong>Success!</strong> Indicates a successful or positive action.</div>";
+           // document.getElementById("assm_"+i).innerHTML +="<p>hi</p>"
+           document.getElementById("assm_"+i).style.color = "green"; 
+
+        }
+        else if(assumptions_ele[i]["assumption_type"]=="unneeded"){
+           document.getElementById("assm_"+i).style.color = "red"; 
+
+        }
+        else if(assumptions_ele[i]["assumption_type"]=="complicatingfactor"){
+           document.getElementById("assm_"+i).style.color = "blue"; 
+
+        }
+    }
+}
+
+function check_atleast_one_selected(){
+    var atleast_one_selected = false;
+
+    var checkboxes = document.getElementsByName('all_assumptions_chk_bx');
+    for (i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].type == 'checkbox' && checkboxes[i].checked) {
+            atleast_one_selected = true;
+        }   
+   
+    }
+
+    if(atleast_one_selected == false){
+        return false;
+    }
+    return true;
+}
 
 function evaluate_assumptions_submission() {
-    document.getElementById('Submit_assm').hidden = true;
+    if(!check_atleast_one_selected()){
+        window.alert("Select Assumptions!!!");
+        return false;
+    }
     var k = 0; //to populate assumption selected array. Multiple assumptions can be selected. 
     var checkboxes = document.getElementsByName('all_assumptions_chk_bx');
     submit_reasons_set = false;
@@ -33,7 +77,10 @@ function evaluate_assumptions_submission() {
                 //Display reasons
                 var all_reasons = assumptions_ele[assumption_selected[k]]["reasons"];
 
-                display_reasons(i,all_reasons);
+                if(all_reasons != null){
+                    display_reasons(i,all_reasons);
+                }
+
             }
         }
         else{
@@ -45,6 +92,11 @@ function evaluate_assumptions_submission() {
         //k is incremented here so as to be able to use k in between. 
         k++;
     }
+   
+    display_feedback_for_assumptions();
+
+    document.getElementById('Submit_assm').hidden = true;
+
     document.getElementById('score_button_id').innerHTML = "Score: "+current_points;
 
     return false;
@@ -68,6 +120,7 @@ function display_reasons(i,all_reasons){
 }
 
 function evaluate_reasons_submission(){
+
     console.log("evaluate_reasons_submission");
     document.getElementById('submit_reasons').hidden = true;
 
@@ -75,6 +128,7 @@ function evaluate_reasons_submission(){
         var radios = document.getElementsByName('reasons_'+each_assm);
         document.getElementsByName('reasons_'+each_assm).disabled = true;
         for (i = 0; i < radios.length; i++) {
+            radios[i].disabled = true;
             if (radios[i].type == 'radio' && radios[i].checked) {
                 // assumption_selected = radios[i].value;
                 console.log("radio selected:"+radios[i].value);
@@ -120,24 +174,35 @@ function create_checkboxes(assumptions_ele){
 
 }
 
-function load_questions() {
-    try {
-        var p = new parser(questions_config);
-        questions = p.parse();
-        if (questions.length == 0)
-            alert("That file seems to have no questions.");
-        else {
-            var qn = Math.floor(questions.length * Math.random());
-            var random_question = questions[qn];
-            global_question = random_question;
-            // render_question(random_question);
-            // display_ques(random_question);
-            document.getElementById('questiontitle').innerHTML = global_question.questiontitle;
-            display_assumptions(questions[qn]);
+function load_file() {
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+        var file = document.forms['aform']['uploadData'].files[0];
+        if (file) {
+            var fr = new FileReader();
+            fr.onload = function(e) {
+                try {
+                    var p = new parser(e.target.result);
+                    questions = p.parse();
+                    if (questions.length == 0) alert("That file seems to have no questions.");
+                    else {
+                        var qn = Math.floor(questions.length * Math.random());
+                        var random_question = questions[qn];
+                        global_question = random_question;
+                        // render_question(random_question);
+                        // display_ques(random_question);
+                        display_assumptions(questions[qn]);
+                    }
+                } catch (e) {
+                    alert("Something went wrong: " + e);
+                }
+            };
+            fr.readAsText(file);
         }
-    } catch (e) {
-        alert("Something went wrong: " + e);
     }
+    else {
+        alert('The File APIs are not fully supported in this browser.');
+    }
+    document.getElementById("all_ins").hidden = true;
     return false;
 }
 
@@ -153,7 +218,7 @@ function load_nextquestion(){
     // document.getElementById("score_display_ele").innerHTML = "Score obtained : "+current_points;
     document.getElementById("score_display_reasons").innerHTML= " ";
     document.getElementById("next").disabled= true;
-    load_questions();
+    load_file();
 }
 
 function remove_ele(ele){
