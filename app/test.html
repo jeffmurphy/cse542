@@ -1,0 +1,65 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+	<link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+	<script src="questions.js"></script>
+	<script src="parse.js"></script>
+	<script src="render.js"></script>
+	<script type="text/javascript" src = 'jquery-3.2.1.js'></script>
+
+	<div id='progbar' class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"><span id='readable_percent_done' class="sr-only">0% Complete</span></div>
+
+	<div id="questionbody" style="visibility: hidden;" class="container-fluid">
+		<div class="row justify-content-end">
+			<div class="col">
+				<div id="questiontitle">Random Question:</div>
+				<div id="testing" style="font-family: monospace; white-space: pre;"></div>
+			</div>
+			<div class="col">
+				<button type="button" name="score_button" class="btn btn-primary btn-lg" style="float: right" id="score_button_id"> Score : 0</button>
+			</div>
+		</div>
+
+		<div id="question_images" class="row">
+			<div class="col">
+				<div id="realworld"></div>
+			</div>
+			<div class="col">
+				<div id="idealized"></div>
+			</div>
+<!-- 			Choose the correct assumption:
+ -->			<!-- <div id="assumptions">
+				fillme in using the render() function
+			</div> -->
+		</div>
+
+	    <div id= "question_div">
+		<!-- <p id="question_ele">Question goes here. </p> -->
+		<!-- <button id="btn1" onclick="return createQuestionElement();">Set Text</button> -->
+		<form id="assumptions" onsubmit="return evaluate_assumptions_submission();">
+		<!-- <form id="assumptions" onsubmit="window.alert("working");"> -->
+
+		</form>
+
+
+		<p id="score_display_ele"><br></p>
+
+		<form id="reasons" onsubmit="return evaluate_reasons_submission();">
+		</form>
+		<p id="score_display_reasons"><br></p>
+	    </div>
+
+		<button type="button" name="next" id= "next" class="btn btn-primary" onclick = "load_nextquestion();" disabled=true>Next</button>
+
+	</div>
+
+	<script>var xx = load_questions();</script>
+    
+
+
+</body>
+</html>
+
