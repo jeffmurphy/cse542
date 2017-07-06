@@ -26,16 +26,15 @@ function display_feedback_for_assumptions(){
         else if(assumptions_ele[i]["assumption_type"]=="unneeded"){
             if(checkboxes[i].checked){
                 document.getElementById("assm_"+i).style.color = "red";
-                document.getElementById("reasons_div_"+i).style.color = "black"; 
+                if(document.getElementById("reasons_div_"+i)){
+                    document.getElementById("reasons_div_"+i).style.color = "black"; 
+                }
             }else{
                 document.getElementById("assm_"+i).style.color = "#D3D3D3"; 
             }
-           
-
         }
         else if(assumptions_ele[i]["assumption_type"]=="complicatingfactor"){
            document.getElementById("assm_"+i).style.color = "blue"; 
-
         }
     }
 }
@@ -82,7 +81,7 @@ function evaluate_assumptions_submission() {
                 console.log("modified points:"+current_points);
                 // document.getElementById('score_display_ele').innerHTML = "Score obtained : "+current_points;
                 console.log("Score displayed");
-                document.getElementById("next").disabled= false;
+               // document.getElementById("next").disabled= false;
             }
             else if(assumptions_ele[assumption_selected[k]]["assumption_type"]=="unneeded" || assumptions_ele[assumption_selected[k]]["assumption_type"]=="complicatingfactor"){
                 console.log("assumption type unneeded or complicatingfactor");
@@ -110,11 +109,11 @@ function evaluate_assumptions_submission() {
     }
    
     display_feedback_for_assumptions();
-
+    
     document.getElementById('Submit_assm').hidden = true;
 
     document.getElementById('score_button_id').innerHTML = "Score: "+current_points;
-
+    document.getElementById("next").disabled= false;
     return false;
 
 }
@@ -123,7 +122,10 @@ function display_reasons(i,all_reasons){
     reasons_div.id = "reasons_div_"+i;
     document.getElementById("assm_"+i).appendChild(reasons_div);
     for (j = 0; j < all_reasons.length; j++){
-        document.getElementById('reasons_div_'+i).innerHTML += "<input type='radio' name='reasons_"+i+"' value="+j+" id = rd_"+j+" >"+all_reasons[j]["reason_text"]+"<br>";
+        var reasons = document.createElement('div');
+        reasons.id = "reasons_"+j;
+        document.getElementById('reasons_div_'+i).appendChild(reasons);
+        document.getElementById('reasons_'+j).innerHTML += "<input type='radio' name='reasons_"+i+"' value="+j+" id = rd_"+j+" >"+all_reasons[j]["reason_text"]+"<br>";
     }
 
     document.getElementById("chk_"+i).checked = true;
@@ -148,17 +150,28 @@ function evaluate_reasons_submission(){
     for (each_assm in assumption_selected){
         var radios = document.getElementsByName('reasons_'+each_assm);
         document.getElementsByName('reasons_'+each_assm).disabled = true;
+
         for (i = 0; i < radios.length; i++) {
             radios[i].disabled = true;
+            var reas_seq = radios[i].value;
+            if(global_question["assumptions"][each_assm]["reasons"][reas_seq]["reason_points"] == -1){
+                    document.getElementById("reasons_"+i).style.color = "#D3D3D3";
+            }
+            else{
+                document.getElementById("reasons_"+i).style.color = "green";
+            }
             if (radios[i].type == 'radio' && radios[i].checked) {
                 // assumption_selected = radios[i].value;
                 console.log("radio selected:"+radios[i].value);
-                var reas_seq = radios[i].value;
+                
                 console.log("points for this reason :"+global_question["assumptions"][each_assm]["reasons"][reas_seq]["reason_points"]);
+                if(global_question["assumptions"][each_assm]["reasons"][reas_seq]["reason_points"] == -1){
+                    document.getElementById("reasons_"+i).style.color = "red";
+                }
                 current_points += global_question["assumptions"][each_assm]["reasons"][reas_seq]["reason_points"];
                 console.log("modified points:"+current_points);
-
             }
+
         }
     }
     document.getElementById('score_button_id').innerHTML = "Score: "+current_points;
