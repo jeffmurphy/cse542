@@ -13,6 +13,11 @@
     border-bottom: 2px solid blue;
     text-decoration: underline;
     font-size: 1.25rem;
+    text-align: center;
+}
+
+#end_page {
+    text-align: center;
 }
 
 /*#realworld img {

@@ -84,13 +84,13 @@ function evaluate_assumptions_submission() {
                 // document.getElementById('score_display_ele').innerHTML = "Score obtained : "+current_points;
                 console.log("Score displayed");
                 if(!nextflag){
-                    document.getElementById("next").disabled= false;
+                    document.getElementById("next").style.display= "block";
                 }  
             }
             else if(assumptions_ele[assumption_selected[k]]["assumption_type"]=="unneeded" || assumptions_ele[assumption_selected[k]]["assumption_type"]=="complicatingfactor"){
                 console.log("assumption type unneeded or complicatingfactor");
                 document.getElementById("chk_"+i).disabled= true;
-                document.getElementById("next").disabled= true;
+                document.getElementById("next").style.display= "none";
                 nextflag = true;
                 current_points+=assumptions_ele[assumption_selected[k]]["assumption_points"];
                 console.log("modified points:"+current_points);
@@ -115,12 +115,12 @@ function evaluate_assumptions_submission() {
    
     display_feedback_for_assumptions();
 
-    document.getElementById('Submit_assm').hidden = true;
+    document.getElementById('Submit_assm').style.display="none";
 
     document.getElementById('score_button_id').innerHTML = "Score: "+current_points;
 
     if(nextflag && !reason_flag){
-        document.getElementById("next").disabled= false;
+        document.getElementById("next").style.display= "block";
     } 
 
     return false;
@@ -134,7 +134,7 @@ function display_reasons(i,all_reasons){
         var reasons = document.createElement('div');
         reasons.id = "reasons_"+i+"_"+j;
         document.getElementById('reasons_div_'+i).appendChild(reasons);
-        document.getElementById('reasons_'+i+"_"+j).innerHTML += "<input type='radio' name='reasons_"+i+"' value="+j+" id = rd_"+j+" >"+all_reasons[j]["reason_text"]+"<br>";
+        document.getElementById('reasons_'+i+"_"+j).innerHTML += "<div class ='radio'><label><input type='radio' name='reasons_"+i+"' value="+j+" id = rd_"+j+" >"+" "+all_reasons[j]["reason_text"]+"</label></div>";
     }
 
     document.getElementById("chk_"+i).checked = true;
@@ -154,7 +154,7 @@ function display_reasons(i,all_reasons){
 function evaluate_reasons_submission(){
 
     console.log("evaluate_reasons_submission");
-    document.getElementById('submit_reasons').hidden = true;
+    document.getElementById('submit_reasons').style.display= "none";
 
     for (each_assm in assumption_selected){
         var radios = document.getElementsByName('reasons_'+each_assm);
@@ -185,7 +185,7 @@ function evaluate_reasons_submission(){
     }
     document.getElementById('score_button_id').innerHTML = "Score: "+current_points;
     console.log("Score displayed");
-    document.getElementById("next").disabled= false;
+    document.getElementById("next").style.display= "block";
     return false;
 
 }
@@ -193,14 +193,14 @@ function evaluate_reasons_submission(){
 
 
 function display_assumptions(q) {
-    document.getElementById("questionbody").style.visibility = "visible";
+    document.getElementById("questionbody").style.display= "block";
     // document.getElementById('question_ele').innerHTML += "<br>" +"<b>"+q["questiontitle"]+"</b>" + "<br>";
     var assumptions_ele = q["assumptions"];
     create_checkboxes(assumptions_ele);
 
     //show submit button as well once all the radios are loaded.
 
-    document.getElementById('assumptions').innerHTML += "<input type='submit' name='Submit' id='Submit_assm' class='btn btn-primary' value='Submit'>"+"<br>";
+    document.getElementById('assumptions').innerHTML += "<input type='submit' name='Submit' id='Submit_assm' class='btn btn-primary' value='Submit' style = 'display:block;'>"+"<br>";
 
     display_images(q);
     return false;
@@ -212,7 +212,7 @@ function display_images(q){
 }
 function create_checkboxes(assumptions_ele){
     for (i = 0; i < assumptions_ele.length; i++){
-            document.getElementById('assumptions').innerHTML += "<div id='assm_"+i+"'><input type='checkbox' name='all_assumptions_chk_bx' value="+i+" id= chk_"+i+">"+assumptions_ele[i]["assumption_text"]+"<br></div>";
+            document.getElementById('assumptions').innerHTML += "<div id='assm_"+i+"' class = 'checkbox'><label><input type='checkbox' name='all_assumptions_chk_bx' value="+i+" id= chk_"+i+">"+" "+assumptions_ele[i]["assumption_text"]+"</label></div>";
         }
 
 }
@@ -274,7 +274,7 @@ function load_nextquestion() {
     document.getElementById("reasons").innerHTML = "";
     // document.getElementById("score_display_ele").innerHTML = "Score obtained : "+current_points;
     document.getElementById("score_display_reasons").innerHTML= " ";
-    document.getElementById("next").disabled= true;
+    document.getElementById("next").style.display= "none";
 
     if (select_random_question()) {
         questions_shown += 1;
@@ -282,9 +282,11 @@ function load_nextquestion() {
         display_question();
     }
     else {
-        document.getElementById('question_images').hidden = true;
+        document.getElementById('question_images').style.display= "none";
         set_progress_bar(100);
-        set_questiontitle("You've completed all of the questions!");
+        document.getElementById('questionbody').style.display= "none";
+        document.getElementById('end_page').style.display= "block";
+        document.getElementById('Finalpage_score').innerHTML= "<h2>Your final score is : "+current_points+"</h2>"
     }
 }
 function remove_ele(ele){
