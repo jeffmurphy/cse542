@@ -12,8 +12,8 @@
 
 var questions_config = `
 questiontitle:Hip Joint Force Analysis
-realworldmodelpath:../data/RealWorld1.png
-idealizedmodelpath:../data/IdealizedModel1.png
+realworldmodelpath:data/RealWorld1.png
+idealizedmodelpath:data/IdealizedModel1.png
 
 assumption_text:Hip acts as a pivot point (no lifting off the bed)
 assumption_type:needed
@@ -57,8 +57,8 @@ assumption_points:-1
 
 
 questiontitle:Second Example
-realworldmodelpath:../data/RealWorld2.png
-idealizedmodelpath:../data/IdealizedModel2.png
+realworldmodelpath:data/RealWorld2.png
+idealizedmodelpath:data/IdealizedModel2.png
 
 assumption_text:Forces are reasonably approximated using static analysis
 assumption_type:needed
