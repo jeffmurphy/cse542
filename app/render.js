@@ -81,7 +81,7 @@ function evaluate_assumptions_submission() {
                 console.log("modified points:"+current_points);
                 // document.getElementById('score_display_ele').innerHTML = "Score obtained : "+current_points;
                 console.log("Score displayed");
-               // document.getElementById("next").disabled= false;
+                document.getElementById("next").disabled= false;
             }
             else if(assumptions_ele[assumption_selected[k]]["assumption_type"]=="unneeded" || assumptions_ele[assumption_selected[k]]["assumption_type"]=="complicatingfactor"){
                 console.log("assumption type unneeded or complicatingfactor");
@@ -94,8 +94,13 @@ function evaluate_assumptions_submission() {
 
                 if(all_reasons != null){
                     display_reasons(i,all_reasons);
+                }else{
+                    if(document.getElementById("reasons_div_"+i)){
+                         document.getElementById("next").disabled= true;
+                    }else{
+                        document.getElementById("next").disabled= false;
+                    }
                 }
-
             }
         }
         else{
@@ -109,11 +114,11 @@ function evaluate_assumptions_submission() {
     }
    
     display_feedback_for_assumptions();
-    
+
     document.getElementById('Submit_assm').hidden = true;
 
     document.getElementById('score_button_id').innerHTML = "Score: "+current_points;
-    document.getElementById("next").disabled= false;
+
     return false;
 
 }
@@ -123,9 +128,9 @@ function display_reasons(i,all_reasons){
     document.getElementById("assm_"+i).appendChild(reasons_div);
     for (j = 0; j < all_reasons.length; j++){
         var reasons = document.createElement('div');
-        reasons.id = "reasons_"+j;
+        reasons.id = "reasons_"+i+"_"+j;
         document.getElementById('reasons_div_'+i).appendChild(reasons);
-        document.getElementById('reasons_'+j).innerHTML += "<input type='radio' name='reasons_"+i+"' value="+j+" id = rd_"+j+" >"+all_reasons[j]["reason_text"]+"<br>";
+        document.getElementById('reasons_'+i+"_"+j).innerHTML += "<input type='radio' name='reasons_"+i+"' value="+j+" id = rd_"+j+" >"+all_reasons[j]["reason_text"]+"<br>";
     }
 
     document.getElementById("chk_"+i).checked = true;
@@ -155,10 +160,10 @@ function evaluate_reasons_submission(){
             radios[i].disabled = true;
             var reas_seq = radios[i].value;
             if(global_question["assumptions"][each_assm]["reasons"][reas_seq]["reason_points"] == -1){
-                    document.getElementById("reasons_"+i).style.color = "#D3D3D3";
+                    document.getElementById("reasons_"+each_assm+"_"+i).style.color = "#D3D3D3";
             }
             else{
-                document.getElementById("reasons_"+i).style.color = "green";
+                document.getElementById("reasons_"+each_assm+"_"+i).style.color = "green";
             }
             if (radios[i].type == 'radio' && radios[i].checked) {
                 // assumption_selected = radios[i].value;
@@ -166,7 +171,7 @@ function evaluate_reasons_submission(){
                 
                 console.log("points for this reason :"+global_question["assumptions"][each_assm]["reasons"][reas_seq]["reason_points"]);
                 if(global_question["assumptions"][each_assm]["reasons"][reas_seq]["reason_points"] == -1){
-                    document.getElementById("reasons_"+i).style.color = "red";
+                    document.getElementById("reasons_"+each_assm+"_"+i).style.color = "red";
                 }
                 current_points += global_question["assumptions"][each_assm]["reasons"][reas_seq]["reason_points"];
                 console.log("modified points:"+current_points);
