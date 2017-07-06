@@ -49,7 +49,7 @@ assumption_points:-1
  reason_points:1
 
 assumption_text:Complicating Assumption #Who Cares I Am Making All This Up?
-assumption_type:unneeded
+assumption_type:complicatingfactor
 assumption_points:-1
 
 assumption_text:Incorrect Assumption that includes a lot of text to make certain you can handle it #1.3
