@@ -7,6 +7,8 @@ var current_points = 0;
 var global_question= null;
 var assumption_selected = [];
 var submit_reasons_set = false;
+var nextflag = false;
+var reason_flag = false;
 
 function display_feedback_for_assumptions(){
     // window.alert("display_feedback_for_assumptions");
@@ -81,25 +83,23 @@ function evaluate_assumptions_submission() {
                 console.log("modified points:"+current_points);
                 // document.getElementById('score_display_ele').innerHTML = "Score obtained : "+current_points;
                 console.log("Score displayed");
-                document.getElementById("next").disabled= false;
+                if(!nextflag){
+                    document.getElementById("next").disabled= false;
+                }  
             }
             else if(assumptions_ele[assumption_selected[k]]["assumption_type"]=="unneeded" || assumptions_ele[assumption_selected[k]]["assumption_type"]=="complicatingfactor"){
                 console.log("assumption type unneeded or complicatingfactor");
                 document.getElementById("chk_"+i).disabled= true;
-
+                document.getElementById("next").disabled= true;
+                nextflag = true;
                 current_points+=assumptions_ele[assumption_selected[k]]["assumption_points"];
                 console.log("modified points:"+current_points);
                 //Display reasons
                 var all_reasons = assumptions_ele[assumption_selected[k]]["reasons"];
 
                 if(all_reasons != null){
+                    reason_flag = true;
                     display_reasons(i,all_reasons);
-                }else{
-                    if(document.getElementById("reasons_div_"+i)){
-                         document.getElementById("next").disabled= true;
-                    }else{
-                        document.getElementById("next").disabled= false;
-                    }
                 }
             }
         }
@@ -118,6 +118,10 @@ function evaluate_assumptions_submission() {
     document.getElementById('Submit_assm').hidden = true;
 
     document.getElementById('score_button_id').innerHTML = "Score: "+current_points;
+
+    if(nextflag && !reason_flag){
+        document.getElementById("next").disabled= false;
+    } 
 
     return false;
 
@@ -259,6 +263,8 @@ function set_progress_bar(p) {
 
 function load_nextquestion() {
    // document.getElementById('question_ele').innerHTML = "Question goes here";
+    nextflag= false;
+    reason_flag = false;
     var rad= document.getElementsByName("selection");
     remove_ele(rad);
     if(document.getElementsByName("reasons")!=null){
