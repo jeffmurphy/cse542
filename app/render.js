@@ -11,7 +11,6 @@ var submit_reasons_set = false;
 function display_feedback_for_assumptions(){
     // window.alert("display_feedback_for_assumptions");
     var assumptions_ele = global_question["assumptions"];
-    var checkboxes = document.getElementsByName('all_assumptions_chk_bx');
     for(i=0;i<assumptions_ele.length;i++){
         // window.alert(i);
         var existing_content = document.getElementById("assm_"+i).innerHTML;
@@ -24,12 +23,7 @@ function display_feedback_for_assumptions(){
 
         }
         else if(assumptions_ele[i]["assumption_type"]=="unneeded"){
-            if(checkboxes[i].checked){
-                document.getElementById("assm_"+i).style.color = "red"; 
-            }else{
-                document.getElementById("assm_"+i).style.color = "#D3D3D3"; 
-            }
-           
+           document.getElementById("assm_"+i).style.color = "red"; 
 
         }
         else if(assumptions_ele[i]["assumption_type"]=="complicatingfactor"){
@@ -65,15 +59,10 @@ function evaluate_assumptions_submission() {
     var checkboxes = document.getElementsByName('all_assumptions_chk_bx');
     submit_reasons_set = false;
     for (i = 0; i < checkboxes.length; i++) {
-
-        assumption_selected[k] = checkboxes[i].value; // if first checkbox checked then 0 stored in array. 
-        var assumptions_ele = global_question["assumptions"];
-
-
         //process only if the checkbox is checked. else just disable the checkbox.
         if (checkboxes[i].type == 'checkbox' && checkboxes[i].checked) {
-            // assumption_selected[k] = checkboxes[i].value; // if first checkbox checked then 0 stored in array. 
-            // var assumptions_ele = global_question["assumptions"];
+            assumption_selected[k] = checkboxes[i].value; // if first checkbox checked then 0 stored in array. 
+            var assumptions_ele = global_question["assumptions"];
             if(assumptions_ele[assumption_selected[k]]["assumption_type"]=="needed"){
                 document.getElementById("chk_"+i).disabled= true;
                 console.log("assumption type needed"); 
@@ -120,11 +109,8 @@ function evaluate_assumptions_submission() {
 function display_reasons(i,all_reasons){
 
     for (j = 0; j < all_reasons.length; j++){
-        document.getElementById('assm_'+i).innerHTML += "<input type='radio' name='reasons_"+i+"' value="+j+" id = rd_"+j+" >"+all_reasons[j]["reason_text"]+"<br>";
+        document.getElementById('assm_'+i).innerHTML += "<div class ='radio'><label><input type='radio' name='reasons_"+i+"' value="+j+" id = rd_"+j+" >"+all_reasons[j]["reason_text"] + "</label></div>";
     }
-
-    document.getElementById("chk_"+i).checked = true;
-
     console.log("Reason checkboxes displayed");
 
     //show submit button as well once all the radios are loaded. 
@@ -187,7 +173,7 @@ function display_images(q){
 }
 function create_checkboxes(assumptions_ele){
     for (i = 0; i < assumptions_ele.length; i++){
-            document.getElementById('assumptions').innerHTML += "<div id='assm_"+i+"'><input type='checkbox' name='all_assumptions_chk_bx' value="+i+" id= chk_"+i+">"+assumptions_ele[i]["assumption_text"]+"<br></div>";
+            document.getElementById('assumptions').innerHTML += "<div id='assm_"+i+"' class = 'checkbox'><label><input type='checkbox' name='all_assumptions_chk_bx' value="+i+" id= chk_"+i+">"+assumptions_ele[i]["assumption_text"]+"</label></div>";
         }
 
 }
